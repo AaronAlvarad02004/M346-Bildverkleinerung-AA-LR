@@ -36,7 +36,7 @@ while true; do
     echo "-----------------------------"
   fi
 done
-
+while true; do
 # Name des Buckets abfragen
     echo "Geben sie den Namen des Buckets fuer die verkleinerten Bildern ein: (kleinbuchstaben)"
     # In Variable speichern
@@ -62,6 +62,16 @@ done
     echo ""
   fi
 done
+while true; do
+  echo "Geben Sie einen Prozentsatz fuer die Verkleinerung des Bildes ein (als ganze Zahl, ohne Prozentzeichen)" 
+  read RESICEPERCENTAGE
 
+  if [[ $RESICEPERCENTAGE =~ ^[0-9]+$ ]]; then
+    echo "Sie haben $RESICEPERCENTAGE% eingegeben."
+    break
+  else
+    echo "Fehler: Sie haben keinen gültigen Prozentsatz eingegeben."
+  fi
+done
 
 
