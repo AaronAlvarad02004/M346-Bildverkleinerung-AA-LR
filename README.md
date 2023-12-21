@@ -1,7 +1,10 @@
 # M346-Bildverkleinerung-AA-LR
 Project with AWS
 ## Anleitung
-1. ...
+1. Den Projektordner von Github herunterladen.
+2. Die VMWare mit LP22.04 öffnen.
+3. Script über Rechtsklick -> "Run as a Program" ausführen. Optional kann man das Skript auch über das Terminal öffnen.
+4. Es werden verschiedene Aufrufe an den User gestellt, welche möglichst den Anforderungen getreu umgesetzt werden sollen. Falsche Eingaben führen zum Abbruch des Skripts.
 ## Code Erklärung
 ## Tests
 ![21.12.2023 Aaron Alvarado](Test1.jpg "Test 1")
