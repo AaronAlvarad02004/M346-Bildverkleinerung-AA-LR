@@ -1,12 +1,67 @@
-buckets=("originalimageproject" "formatedimageproject")
-for bucket in ${buckets[@]}; do
-	aws s3 rb s3://$bucket --force
-	
-	aws s3 mb s3://$bucket
+#!/bin/bash
+# Autor: Aaron Alvarado, Larissa Richvalski
+# Date: 2023-12-20
+# Beschreibung: Skript zum Erstellen der lambda Funktion, der Buckets und der Variablen
 
-	aws s3api put-public-access-block --bucket $bucket --public-access-block-configuration "BlockPublicPolicy=false"
+BUCKETSOURCE=""
+BUCKETDESTINATION=""
+RESICEPERCENTAGE= 0
 
-	aws s3api put-bucket-ownership-controls --bucket $bucket --ownership-controls="Rules=[{ObjectOwnership=BucketOwnerPreferred}]"
+# Erstellen der lambda Funktion
+while true; do
+
+    # Name des Buckets abfragen
+    echo ""
+    echo "Geben sie den Namen des Buckets fuer die originalen Bilder ein: (kleinbuchstaben)"
+    # In Variable speichern
+    read BUCKETSOURCE
+
+  # Uebpruefen ob Bucket existiert
+  RESULT=$(aws s3api head-bucket --bucket $BUCKETSOURCE 2>&1)
+
+	echo $RESULT
+  # Ueberpruefen der Antwort
+  if [[ $RESULT = *404* ]]
+   then
+    echo "Bucket $BUCKETSOURCE ist verfuegbar"
+    echo ""
+    echo "-----------------------------"
+    echo ""
+    aws s3 mb s3://$BUCKETSOURCE
+    echo "-----------------------------"
+    break
+  else
+    echo "Bucket $BUCKETSOURCE ist nicht verfuegbar, bitte nochmals versuchen"
+    echo ""
+    echo "-----------------------------"
+  fi
 done
+
+# Name des Buckets abfragen
+    echo "Geben sie den Namen des Buckets fuer die verkleinerten Bildern ein: (kleinbuchstaben)"
+    # In Variable speichern
+    read BUCKETDESTINATION
+
+  # Uebpruefen ob Bucket existiert
+  RESULT=$(aws s3api head-bucket --bucket $BUCKETDESTINATION 2>&1)
+
+  # Ueberpruefen der Antwort
+  if [[ $RESULT = *404* ]] 
+  then
+    echo "Bucket $BUCKETDESTINATION ist verfuegbar"
+    echo ""
+    echo "-----------------------------"
+    echo ""
+    aws s3 mb s3://$BUCKETDESTINATION
+    echo "-----------------------------"
+    break
+  else
+    echo "Bucket $BUCKETSESTINATION ist nicht verfuegbar, bitte nochmals versuchen"
+    echo ""
+    echo "-----------------------------"
+    echo ""
+  fi
+done
+
 
 
