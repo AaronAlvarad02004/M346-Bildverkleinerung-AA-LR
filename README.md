@@ -10,6 +10,16 @@ Project with AWS
    
 ## Code Erklärung
 
+Das Indexskript.sh ist dass Hauptskript, welches dann auch ausgeführt werden soll.  Hier wird zuerst geprüft, ob der User AWS CLI installiert hat, um die banalsten Fehler abzufangen. Falls dies nicht der Fall ist wird es automatisch für den User installiert und natürlich geprüft, ob es dann auch wirklich installiert ist. 
+In einem nächsten Schritt werden die Konfigurationen geprüft, dass heisst ob die nötigen Berechtigungen/Credentials vorhanden sind, dass man das Skript ausführen kann. Falls nicht wird der User aufgefordert diese zu setzten, bis sie korrekt eingetragen sind. 
+Erst dann werden die Buckets erstellt, mit der Abfrage, ob diese nicht unter diesem Namen bereits existent sind, bis hin zu der Abfrage der gewünschten Verkleinerungszahl. Dies wird in Form von Prozent abgefragt. Der User hat keine Möglichkeit auf andere Formate.
+Im nächsten Schritt wird im Ordner gesucht, ob die Verbindung zum LambdaSkript existiert und wenn dies der Fall ist wird es ausgeführt. Hierbei beachten, dass für jeden Aufruf alte Ausführungen gelöscht werden.  Am Ende wird dass verkleinerte Bild in den zweiten Bucket übergeben und für den User heruntergeladen.
+
+Das Node_modules Packet befindet sich im Lambda.zip und ist ein Ordner, welches als eine Art Library funktioniert. Es beinhaltet unterschiedliche Installationen von anderen Extensions, welche im Endeffekt im Code genutzt werden, um dessen Funktionalität zu gewährleisten. Unteranderem befindet sich beispielsweise das Sharp-Installationspacket darin. Mit jenem wurde die Lambda-Funktion erstellt, da es Teile beinhaltet, welche die Bildverkleinerung gewährleistet.
+Unter anderem befindet sich das LambdaScript.js darin, in welchem dann effektiv das Skript für die Lambda-Funktion erstellt wurde. Heir werden als erstes die Verbindungen zu node_modules eingebaut um deren Nutzbarkeit zu vergewissern. In einem zweiten Schritt wird, da es ein Js File ist ein Event erstellt. Mit diesem kann man von dem AWS CLI Skript aus auf die Lambda-Funktion zugreifen. In einem zweiten Schritt wird zuerst eine S3 Instanz kreiirt und direkt anschliessend das Source Bucket eingeflossen, um an das Bild darin zu kommen. In einem nexten Step wird dann die Prozentzahl dazugenommen. Um Fehler abzufangen wird die Bildverkleinerung in einem Try-Catch-Case abgehandelt.  Dabei wird das Bild genommen und in der Funktion verkleinert, um dann in einem Buffer gespeichert zu werden. Im letzten Schritt wird das Bild über den putObjekt-Aufruf in den zweiten Bucket gespeichert. Dafür sind wieder Bucketname und -key von Nöten. 
+Die Package(-...).json files sind für die Verbindungen, auch Dependencies genannt, zwischen node_modules und lambdaScript verantwortlich. 
+
+Unteranderem sind alle Screenshots für die Dokumentation und die Dokumentation im README abgelegt.
 
 ## Tests
 ![21.12.2023 Aaron Alvarado](Test1.jpg "Test 1")
