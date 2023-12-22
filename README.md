@@ -33,4 +33,10 @@ Test um die Existenz von AWS CLI, war erfolgreich.
 
 ![21.12.2023 Aaron Alvarado](Test6.jpg "Test 6")
 
-Prüfung, ob Konfiguration im Falle der Nicht-Existenz erstellbar ist. Hier ist aufgrund der nicht möglichen Übergabe des Session Tokens fehlgeschlagen. Jedoch mit einem expliziten Aufruf, dass man einen Input haben möchte, welche den Session Key übergeben, hat es schlussendlich funktioniert
+Prüfung, ob Konfiguration im Falle der Nicht-Existenz erstellbar ist. Hier ist aufgrund der nicht möglichen Übergabe des Session Tokens fehlgeschlagen. Jedoch mit einem expliziten Aufruf, dass man einen Input haben möchte, welche den Session Key übergeben, hat es schlussendlich funktioniert.
+
+![21.12.2023 Aaron Alvarado](Test7.jpg "Test 7")
+
+Es wurde getestet, ob das Bild in den ersten Bucket hochgeladen wurde. Dies hat keine Probleme bereitet. Beim Download wiederum gab es Probleme weild die Funktion noch nicht ganz ausgeführt wurde und das Bild noch nicht im Bucket zwei abgelegt war. Dies wurde durch ein Sleep 10 behoben.
+
+
