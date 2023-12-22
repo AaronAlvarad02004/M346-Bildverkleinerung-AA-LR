@@ -124,14 +124,17 @@ while true; do
   fi
 done
 
-# Löschen der lambda Funktion
-aws lambda delete-function --function-name imageConverter
-# Deployment Package erstellen
-zip index.zip index.js
-# Erstellen der lambda Funktion
-aws lambda create-function --function-name imageConverter --runtime nodejs18.x --role arn:aws:iam::$ARN:role/LabRole --handler index.handler --zip-file fileb://./index.zip --memory-size 256
+# Überprüfen, ob die Lambda-Funktion existiert
+existing_function=$(aws lambda get-function --function-name "imageConverter" 2>/dev/null)
 
-#aws iam put-role-policy --role-name LabRole --policy-name LabRolePolicy --policy-document file://lab-role-policy.json
+if [ $? -eq 0 ]; then
+    # Wenn die Funktion existiert, löschen Sie sie
+    aws lambda delete-function --function-name imageConverter
+    echo "Die vorhandene Lambda-Funktion wurde gelöscht."
+fi
+
+# Erstellen der lambda Funktion
+aws lambda create-function --function-name imageConverter --runtime nodejs18.x --role arn:aws:iam::$ARN:role/LabRole --handler lambdaScript.handler --zip-file fileb://./lambdaScript.zip --memory-size 256
 
 # Berechtigung für S3 Bucket und S3 trigger hinzufügen
 aws lambda add-permission --function-name imageConverter --action "lambda:InvokeFunction" --principal s3.amazonaws.com --source-arn arn:aws:s3:::$BUCKETSOURCE --statement-id "$BUCKETSOURCE"
@@ -148,21 +151,22 @@ aws s3api put-bucket-notification-configuration --bucket "$BUCKETSOURCE" --notif
 }'
 
 # Die Variablen werden übergeben
-aws lambda update-function-configuration --function-name imageConverter --environment "Variables={BUCKETSOURCE=$BUCKETSOURCE,BUCKETDESTINATION=$BUCKETDESTINATION, RESIZEPERCENTAGE=$RESIZEPERCENTAGE}" --query "Environment"
+aws lambda update-function-configuration --function-name imageConverter --environment "Variables={BUCKET_NAME_ORIGINAL=$BUCKETSOURCE,BUCKET_NAME_COMPRESSED=$BUCKETDESTINATION, PERCENTAGE_RESIZE=$RESIZEPERCENTAGE}" --query "Environment"
 
 #Das Bild wird in den Source Bucket hochgeladen
-aws s3 cp testImage.jpg s3://$BUCKETSOURCE//testImage.jpg
+aws s3 cp testImage.jpg s3://$BUCKETSOURCE/testImage.jpg
 
-#LATE# STIMAGE=$(aws s3 ls s3://$BUCKETDESTINATION --recursive | sort | tail -n 1 | awk '{print $4}')
+sleep 10
 
-# Es Wird ein Verzeichnis erstellt
-mkdir ~/CompresedImage
+if [ -d ./CompresedImage ]; then
+    rm -r ./CompresedImage
+fi
 
-#Die Berechtigung wird geändert
-chmod --recursive 777 ~/CompresedImage
+mkdir ./CompresedImage
+chmod -R 755 ./CompresedImage
 
-#aws s3 cp s3://$BUCKETDESTINATION/$LATESTIMAGE "/home"
+aws s3 cp s3://$BUCKETDESTINATION/resized-testImage.jpg ./CompresedImage
 
-echo "Das Bild liegt im Home verzeichnis unter /home/CompresedImage"
+echo "Das Bild liegt im Aktuellen-Verzeichnis unter ./CompresedImage"
 
 sleep 5
