@@ -6,9 +6,11 @@ Project with AWS
 3. Skript in die VMWare übertragen, falls dies nicht bereits geschehen ist.
 4. Script über Rechtsklick -> "Run as a Program" ausführen. Optional kann man das Skript auch über das Terminal öffnen.
 5. Es verlangt etwas Geduld, da das Laden der Zip-Datei und deren Funktion eine gewisse Zeit in Anspruch nehmen kann. Je nach Internetverbindung geht es schneller oder weniger.
-6. Es werden verschiedene Aufrufe an den User gestellt, welche möglichst den Anforderungen getreu umgesetzt werden sollen. Falsche Eingaben führen zum Abbruch des Skripts.
+6. Es werden verschiedene Aufrufe an den User gestellt, welche möglichst den Anforderungen getreu umgesetzt werden sollen. Falsche Eingaben führen zur wiederholten Eingabe.
    
 ## Code Erklärung
+
+
 ## Tests
 ![21.12.2023 Aaron Alvarado](Test1.jpg "Test 1")
 
@@ -38,6 +40,16 @@ Prüfung, ob Konfiguration im Falle der Nicht-Existenz erstellbar ist. Hier ist 
 ![21.12.2023 Aaron Alvarado](Test7.jpg "Test 7")
 
 Es wurde getestet, ob das Bild in den ersten Bucket hochgeladen wurde. Dies hat keine Probleme bereitet. Beim Download wiederum gab es Probleme weild die Funktion noch nicht ganz ausgeführt wurde und das Bild noch nicht im Bucket zwei abgelegt war. Dies wurde durch ein Sleep 10 behoben.
+
+## Reflexion
+### Aaron
+### Larissa
+
+Im allgemeinen hat die Aufgabenstellung mich etwas überfordert, da wir in den vorherigen Lektionen das Thema etwas zu schnell für meinen Geschmack durchgegangen sind. Dementsprechend war ich sehr froh über die Gruppenzusammenarbeit, da sie mich entlastet hat und ich Aufgaben die ich noch nicht ganz Verknüpfen konnte mit meinem kompetenten Partner abgleichen konnte. Im allgemeinen habe ich mich mit der Lambda-Funktion befasst. Einen Teil konnte ich aus den Aufgabenblätter entnehmen der restliche Grossteil hat mir das Internet geliefert und fürs Verständnis Chat GPT und meine Oberstiften. Zurückblickend finde ich es nicht so gut, dass man den Funktionsinhalt nicht vorab gestellt bekommt, denn im Endeffekt bleibt einem gar nichts anderes übrig als die Informationen, welche man eventuell auch nicht immer gerade versteht, aus dem Internet zu beziehen und es ist im Ende nicht das Ziel, wer besser Research betreibt, sondern die vorherigen Aufgaben anwenden zu können.
+Ein weiterer negativer Aspekt aus meiner Seite war unser Zeitmanagement. Im allgemeinen hätte es der Qualität des Projektes geholfen, hätten wir nicht zeitgleich zwei weitere Projekte abschliessen müssen und nicht noch reguläre Prüfungen zu schreiben gehabt. Dementsprechend hat unsere Gruppe klare Prioritäten gesetzt, bei denen die Lektionen im Unterricht nirgendswohin gereicht haben. 
+Dennoch fand ich das Projekt lehrreich und hatte einigermassen Spass, dies umzusetzten.
+
+## Quellen
 
 
 
